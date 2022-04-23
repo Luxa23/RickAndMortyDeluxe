@@ -1,20 +1,23 @@
 // import { elements } from './selectors.js';
 // import fetchData from './fetch.js';
 
-let characterName = [];
-let characterImage = [];
 const cardContainer = document.querySelector('[data-js="cardContainer"]');
 
 const button = document.querySelector('[data-js="button"]');
 
 function fetchDataAndRender() {
-  let randomCharacter = getRandomCharacter(1, 826);
-  fetch(`https://rickandmortyapi.com/api/character/${randomCharacter}`)
+  const randomCharacter = getRandomCharacter(1, 826);
+  let randomCharacterAlternative = getRandomCharacter(1, 826);
+  while (randomCharacter === randomCharacterAlternative) {
+    randomCharacterAlternative = getRandomCharacter(1, 826);
+  }
+
+  fetch(
+    `https://rickandmortyapi.com/api/character/${randomCharacter},${randomCharacterAlternative}`
+  )
     .then(response => response.json())
     .then(data => {
-      characterImage = data.image;
-      characterName = data.name;
-      const item = createCharacterCard();
+      const item = createCharacterCard(data, randomCharacter);
       cardContainer.appendChild(item);
       onShowAnswer();
     });
@@ -29,13 +32,36 @@ button.addEventListener('click', () => {
   fetchDataAndRender();
 });
 
-function createCharacterCard() {
+function createCharacterCard(characters, correctCharacter) {
+  const correctIndex = characters.findIndex(
+    character => character.id === correctCharacter
+  );
+  const incorrectIndex = characters.findIndex(
+    character => character.id !== correctCharacter
+  );
+
+  const { name: nameFirst, image } = characters[correctIndex];
+  const { name: nameSecond } = characters[incorrectIndex];
+  const randomize = Math.floor(Math.random() * 2);
+
   const card = document.createElement('div');
   card.classList.add('card__element');
   card.innerHTML = `
-  <img src="${characterImage}" alt="${characterName}"></img>
+  <img src="${image}" alt="${nameFirst}"></img>
   <p>Who is this?</p>
-  <h3 data-js="answer" hidden>${characterName}</h3>
+  <div>
+  <input type="radio" id="answerOne" name="characterAnswers" value="${
+    randomize < 1 ? nameFirst : nameSecond
+  }">
+  <label for="answerOne">${randomize < 1 ? nameFirst : nameSecond}</label>
+  </div>
+  <div>
+  <input type="radio" id="answerTwo" name="characterAnswers" value="${
+    randomize > 0 ? nameFirst : nameSecond
+  }">
+  <label for="answerTwo">${randomize > 0 ? nameFirst : nameSecond}</label>
+  </div>
+  <h3 data-js="answer" hidden>${nameFirst}</h3>
   <button data-js="button__answer" class="button__answer" >Show Name</button>
   `;
   return card;
