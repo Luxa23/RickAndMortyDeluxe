@@ -5,11 +5,10 @@ let characterName = [];
 let characterImage = [];
 const cardContainer = document.querySelector('[data-js="cardContainer"]');
 
-let randomCharacter = getRandomCharacter(1, 826);
-
 const button = document.querySelector('[data-js="button"]');
 
 function fetchDataAndRender() {
+  let randomCharacter = getRandomCharacter(1, 826);
   fetch(`https://rickandmortyapi.com/api/character/${randomCharacter}`)
     .then(response => response.json())
     .then(data => {
