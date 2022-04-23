@@ -2,3 +2,8 @@
   background-color: hotpink;
   color: white;
 }
+
+.button__answer {
+  background-color: chartreuse;
+  color: black;
+}
