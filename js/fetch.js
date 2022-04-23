@@ -1,6 +1,3 @@
-fetch('https://rickandmortyapi.com/api')
-  .then(response => response.json())
-  .then(data => {
-    //code execute
-    console.log(data);
-  });
+//replace this with working code
+
+// export default function
