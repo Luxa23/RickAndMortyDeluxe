@@ -17,6 +17,7 @@ function fetchDataAndRender() {
       characterName = data.name;
       const item = createCharacterCard();
       cardContainer.appendChild(item);
+      onShowAnswer();
     });
 }
 
@@ -34,7 +35,17 @@ function createCharacterCard() {
   card.classList.add('card__element');
   card.innerHTML = `
   <img src="${characterImage}" alt="${characterName}"></img>
-  <h3>${characterName}</h3>
+  <p>Who is this?</p>
+  <h3 data-js="answer" hidden>${characterName}</h3>
+  <button data-js="button__answer" class="button__answer" >Show Name</button>
   `;
   return card;
+}
+
+function onShowAnswer() {
+  const elementAnswer = document.querySelector('[data-js="answer"]');
+  const buttonAnswer = document.querySelector('[data-js="button__answer"]');
+  buttonAnswer.addEventListener('click', () => {
+    elementAnswer.toggleAttribute('hidden');
+  });
 }
