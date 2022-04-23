@@ -3,13 +3,14 @@
 
 let characterData = [];
 const cardContainer = document.querySelector('[data-js="cardContainer"]');
-const pageNumber = getRandomPage(1, 42);
-const button = document.querySelector('button');
+let pageNumber = getRandomPage(1, 42);
+const button = document.querySelector('[data-js="button"]');
 
 function fetchDataAndRender() {
   fetch(`https://rickandmortyapi.com/api/character/?page=${pageNumber}`)
     .then(response => response.json())
     .then(data => {
+      console.log(data);
       characterData = data.results;
       characterData.forEach(character => {
         const item = createCharacterCard(character);
@@ -23,8 +24,7 @@ function getRandomPage(min, max) {
 }
 
 button.addEventListener('click', () => {
-  cardContainer.innerHTML = ''; // should delete previous stack  ---> does not work
-  getRandomPage(1, 42); // should generate new stack  ---> works?
+  cardContainer.innerHTML = '';
   fetchDataAndRender();
 });
 
