@@ -3,7 +3,7 @@
 
 const cardContainer = document.querySelector('[data-js="cardContainer"]');
 const button = document.querySelector('[data-js="button"]');
-
+let correctAnswer = [];
 function fetchDataAndRender() {
   const randomCharacter = getRandomCharacter(1, 826);
   let randomCharacterAlternative = getRandomCharacter(1, 826);
@@ -38,7 +38,6 @@ function createCharacterCard(characters, correctCharacter) {
   const incorrectIndex = characters.findIndex(
     character => character.id !== correctCharacter
   );
-
   const { name: nameFirst, image } = characters[correctIndex];
   const { name: nameSecond } = characters[incorrectIndex];
   const randomize = Math.floor(Math.random() * 2);
@@ -67,6 +66,7 @@ function createCharacterCard(characters, correctCharacter) {
   <h3 data-js="answer" hidden>${nameFirst}</h3>
   <button data-js="button__answer" disabled>Pic a name</button>
   `;
+  correctAnswer = nameFirst;
   return card;
 }
 
@@ -78,10 +78,17 @@ function checkRadioAndShowAnswer() {
     radioButton.addEventListener('change', () => {
       buttonAnswer.removeAttribute('disabled');
       buttonAnswer.classList.add('button__answer');
-      buttonAnswer.textContent = 'check';
+      buttonAnswer.textContent = 'check result';
       buttonAnswer.addEventListener('click', () => {
         elementAnswer.toggleAttribute('hidden');
       });
+      if (elementAnswer.value === correctAnswer.value) {
+        elementAnswer.innerHTML = `It's ${correctAnswer}`;
+        elementAnswer.style.color = 'chartreuse';
+      } else {
+        elementAnswer.innerHTML = `It's ${correctAnswer}`;
+        elementAnswer.style.color = 'hotpink';
+      }
     });
   });
 }

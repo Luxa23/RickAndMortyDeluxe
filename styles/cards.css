@@ -51,6 +51,7 @@
 h3 {
   color: chartreuse;
   padding: 20px 0;
+  text-align: center;
 }
 
 button:disabled {
