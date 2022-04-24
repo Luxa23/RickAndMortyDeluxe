@@ -28,7 +28,7 @@
   background-color: chartreuse;
   color: black;
   border-radius: 50px;
-  border: 3px solid hotpink;
+  _border: 3px solid hotpink;
   padding: 0.8rem 3rem;
   font-weight: bold;
   text-transform: uppercase;

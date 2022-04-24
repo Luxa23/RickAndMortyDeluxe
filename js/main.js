@@ -50,22 +50,20 @@ function createCharacterCard(characters, correctCharacter) {
   <img class="card__image"src="${image}" alt="${nameFirst}"></img>
   <p class="card_who">Who is this?</p>
   <div class="card__names-wrapper">
-  <div>
+  <label class="radio" for="answerOne">${randomize < 1 ? nameFirst : nameSecond}
   <input type="radio" id="answerOne" name="characterAnswers" value="${
     randomize < 1 ? nameFirst : nameSecond
   }">
-  <label class="radio" for="answerOne">${
-    randomize < 1 ? nameFirst : nameSecond
-  }</label>
-  </div>
-  <div>
-  <input type="radio" id="answerTwo" name="characterAnswers" value="${
-    randomize > 0 ? nameFirst : nameSecond
-  }">
+  <span class="radio__checkmark"></span>
+  </label>
   <label class="radio" for="answerTwo">${
     randomize > 0 ? nameFirst : nameSecond
-  }</label>
-  </div>
+  }<input type="radio" id="answerTwo" name="characterAnswers" value="${
+    randomize > 0 ? nameFirst : nameSecond
+  }">
+  <span class="radio__checkmark"></span>
+  </label>
+
   </div>
   <h3 data-js="answer" hidden>${nameFirst}</h3>
   <button data-js="button__answer" class="button__answer" >Show Name</button>
