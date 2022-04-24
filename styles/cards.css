@@ -52,3 +52,15 @@ h3 {
   color: chartreuse;
   padding: 20px 0;
 }
+
+button:disabled {
+  border-style: none;
+  color: black;
+  border-radius: 50px;
+  _border: 3px solid chartreuse;
+  font-weight: bold;
+  margin: 1rem;
+  padding: 0.8rem 3rem;
+  text-transform: uppercase;
+  background-color: rgb(63, 63, 63);
+}

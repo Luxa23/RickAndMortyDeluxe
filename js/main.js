@@ -2,7 +2,6 @@
 // import fetchData from './fetch.js';
 
 const cardContainer = document.querySelector('[data-js="cardContainer"]');
-
 const button = document.querySelector('[data-js="button"]');
 
 function fetchDataAndRender() {
@@ -19,7 +18,7 @@ function fetchDataAndRender() {
     .then(data => {
       const item = createCharacterCard(data, randomCharacter);
       cardContainer.appendChild(item);
-      onShowAnswer();
+      checkRadioAndShowAnswer();
     });
 }
 
@@ -51,14 +50,14 @@ function createCharacterCard(characters, correctCharacter) {
   <p class="card_who">Who is this?</p>
   <div class="card__names-wrapper">
   <label class="radio" for="answerOne">${randomize < 1 ? nameFirst : nameSecond}
-  <input type="radio" id="answerOne" name="characterAnswers" value="${
+  <input data-js="checkRadio" type="radio" id="answerOne" name="characterAnswers" value="${
     randomize < 1 ? nameFirst : nameSecond
   }">
   <span class="radio__checkmark"></span>
   </label>
   <label class="radio" for="answerTwo">${
     randomize > 0 ? nameFirst : nameSecond
-  }<input type="radio" id="answerTwo" name="characterAnswers" value="${
+  }<input data-js="checkRadio" type="radio" id="answerTwo" name="characterAnswers" value="${
     randomize > 0 ? nameFirst : nameSecond
   }">
   <span class="radio__checkmark"></span>
@@ -66,15 +65,23 @@ function createCharacterCard(characters, correctCharacter) {
 
   </div>
   <h3 data-js="answer" hidden>${nameFirst}</h3>
-  <button data-js="button__answer" class="button__answer" >Show Name</button>
+  <button data-js="button__answer" disabled>Pic a name</button>
   `;
   return card;
 }
 
-function onShowAnswer() {
+function checkRadioAndShowAnswer() {
   const elementAnswer = document.querySelector('[data-js="answer"]');
   const buttonAnswer = document.querySelector('[data-js="button__answer"]');
-  buttonAnswer.addEventListener('click', () => {
-    elementAnswer.toggleAttribute('hidden');
+  const radioButtons = document.querySelectorAll('[data-js="checkRadio"]');
+  radioButtons.forEach(radioButton => {
+    radioButton.addEventListener('change', () => {
+      buttonAnswer.removeAttribute('disabled');
+      buttonAnswer.classList.add('button__answer');
+      buttonAnswer.textContent = 'check';
+      buttonAnswer.addEventListener('click', () => {
+        elementAnswer.toggleAttribute('hidden');
+      });
+    });
   });
 }
