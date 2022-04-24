@@ -2,9 +2,8 @@
 // import fetchData from './fetch.js';
 
 const cardContainer = document.querySelector('[data-js="cardContainer"]');
-
 const button = document.querySelector('[data-js="button"]');
-
+let correctAnswer = [];
 function fetchDataAndRender() {
   const randomCharacter = getRandomCharacter(1, 826);
   let randomCharacterAlternative = getRandomCharacter(1, 826);
@@ -19,7 +18,7 @@ function fetchDataAndRender() {
     .then(data => {
       const item = createCharacterCard(data, randomCharacter);
       cardContainer.appendChild(item);
-      onShowAnswer();
+      checkRadioAndShowAnswer();
     });
 }
 
@@ -39,7 +38,6 @@ function createCharacterCard(characters, correctCharacter) {
   const incorrectIndex = characters.findIndex(
     character => character.id !== correctCharacter
   );
-
   const { name: nameFirst, image } = characters[correctIndex];
   const { name: nameSecond } = characters[incorrectIndex];
   const randomize = Math.floor(Math.random() * 2);
@@ -47,30 +45,50 @@ function createCharacterCard(characters, correctCharacter) {
   const card = document.createElement('div');
   card.classList.add('card__element');
   card.innerHTML = `
-  <img src="${image}" alt="${nameFirst}"></img>
-  <p>Who is this?</p>
-  <div>
-  <input type="radio" id="answerOne" name="characterAnswers" value="${
+  <img class="card__image"src="${image}" alt="${nameFirst}"></img>
+  <p class="card_who">Who is this?</p>
+  <div class="card__names-wrapper">
+  <label class="radio" for="answerOne">${randomize < 1 ? nameFirst : nameSecond}
+  <input data-js="checkRadio" type="radio" id="answerOne" name="characterAnswers" value="${
     randomize < 1 ? nameFirst : nameSecond
   }">
-  <label for="answerOne">${randomize < 1 ? nameFirst : nameSecond}</label>
-  </div>
-  <div>
-  <input type="radio" id="answerTwo" name="characterAnswers" value="${
+  <span class="radio__checkmark"></span>
+  </label>
+  <label class="radio" for="answerTwo">${
+    randomize > 0 ? nameFirst : nameSecond
+  }<input data-js="checkRadio" type="radio" id="answerTwo" name="characterAnswers" value="${
     randomize > 0 ? nameFirst : nameSecond
   }">
-  <label for="answerTwo">${randomize > 0 ? nameFirst : nameSecond}</label>
+  <span class="radio__checkmark"></span>
+  </label>
+
   </div>
   <h3 data-js="answer" hidden>${nameFirst}</h3>
-  <button data-js="button__answer" class="button__answer" >Show Name</button>
+  <button data-js="button__answer" disabled>Pic a name</button>
   `;
+  correctAnswer = nameFirst;
   return card;
 }
 
-function onShowAnswer() {
+function checkRadioAndShowAnswer() {
   const elementAnswer = document.querySelector('[data-js="answer"]');
   const buttonAnswer = document.querySelector('[data-js="button__answer"]');
-  buttonAnswer.addEventListener('click', () => {
-    elementAnswer.toggleAttribute('hidden');
+  const radioButtons = document.querySelectorAll('[data-js="checkRadio"]');
+  radioButtons.forEach(radioButton => {
+    radioButton.addEventListener('change', () => {
+      buttonAnswer.removeAttribute('disabled');
+      buttonAnswer.classList.add('button__answer');
+      buttonAnswer.textContent = 'check result';
+      buttonAnswer.addEventListener('click', () => {
+        elementAnswer.toggleAttribute('hidden');
+      });
+      if (elementAnswer.value === correctAnswer.value) {
+        elementAnswer.innerHTML = `It's ${correctAnswer}`;
+        elementAnswer.style.color = 'chartreuse';
+      } else {
+        elementAnswer.innerHTML = `It's ${correctAnswer}`;
+        elementAnswer.style.color = 'hotpink';
+      }
+    });
   });
 }
