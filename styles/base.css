@@ -1,6 +1,8 @@
 * {
   box-sizing: border-box;
-  outline: 1px solid blue;
+  margin: 0;
+  padding: 0;
+  _outline: 1px solid blue;
 }
 
 :root {
@@ -8,18 +10,9 @@
   background-color: rgb(56, 56, 56);
 }
 
-main {
-  display: grid;
-  grid-template-rows: 5.5rem 1fr 5.9rem;
-  _height: 99vh;
-  _display: flex;
-  _flex-direction: column;
+body {
+  display: flex;
+  flex-direction: column;
   font-family: sans-serif;
   margin-top: calc(var(--nav-height) + 1.5rem);
 }
-
-/* main {
-  padding: 1.5rem 1rem 1rem;
-  display: grid;
-  height: calc(100vh - 5rem - 5rem);
-} */
