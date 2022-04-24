@@ -1,6 +1,11 @@
 .Button {
   background-color: hotpink;
-  color: white;
+  color: black;
+  border-radius: 30px;
+  border: 3px solid chartreuse;
+  margin: 0.2rem;
+  padding: 1rem 4rem;
+  font-weight: bold;
 }
 
 .button__answer {

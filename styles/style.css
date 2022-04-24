@@ -3,3 +3,5 @@
 @import './colors.css';
 @import './cards.css';
 @import '../components/Button.css';
+@import './header.css';
+@import './footer.css';
