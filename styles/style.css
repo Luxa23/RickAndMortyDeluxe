@@ -2,6 +2,8 @@
 @import './utility.css';
 @import './colors.css';
 @import './cards.css';
-@import '../components/Button.css';
-@import './header.css';
-@import './footer.css';
+@import './nav.css';
+@font-face {
+  font-family: 'Schwifty';
+  src: local('Schwifty'), url('./get_schwifty.ttf') format('TrueType');
+}

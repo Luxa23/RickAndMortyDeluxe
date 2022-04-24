@@ -47,19 +47,25 @@ function createCharacterCard(characters, correctCharacter) {
   const card = document.createElement('div');
   card.classList.add('card__element');
   card.innerHTML = `
-  <img src="${image}" alt="${nameFirst}"></img>
-  <p>Who is this?</p>
+  <img class="card__image"src="${image}" alt="${nameFirst}"></img>
+  <p class="card_who">Who is this?</p>
+  <div class="card__names-wrapper">
   <div>
   <input type="radio" id="answerOne" name="characterAnswers" value="${
     randomize < 1 ? nameFirst : nameSecond
   }">
-  <label for="answerOne">${randomize < 1 ? nameFirst : nameSecond}</label>
+  <label class="radio" for="answerOne">${
+    randomize < 1 ? nameFirst : nameSecond
+  }</label>
   </div>
   <div>
   <input type="radio" id="answerTwo" name="characterAnswers" value="${
     randomize > 0 ? nameFirst : nameSecond
   }">
-  <label for="answerTwo">${randomize > 0 ? nameFirst : nameSecond}</label>
+  <label class="radio" for="answerTwo">${
+    randomize > 0 ? nameFirst : nameSecond
+  }</label>
+  </div>
   </div>
   <h3 data-js="answer" hidden>${nameFirst}</h3>
   <button data-js="button__answer" class="button__answer" >Show Name</button>
